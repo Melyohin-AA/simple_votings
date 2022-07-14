@@ -20,7 +20,7 @@
             {% for var in vars %}
                 <input type="checkbox" id="var_{{var.0}}">
                 <script>vars.push(var_{{var.0}})</script>
-                <input value={{ var.1 }} readonly> <br>
+                <input value="{{ var.1 }}" readonly> <br>
             {% endfor %}
             {% for item in form %}
                 <label>{{ item.label }}</label>

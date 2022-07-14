@@ -14,7 +14,7 @@
                 {% for var in variants %}
                     <div class="form-group row">
                         <label class="mr-3">#{{ var.0 }}.</label>
-                        <input class="form-control col-sm-9" value={{ var.1 }} readonly>
+                        <input class="form-control col-sm-9" value="{{ var.1 }}" readonly>
                     </div>
                 {% endfor %}
             </div>
