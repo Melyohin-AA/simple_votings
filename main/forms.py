@@ -46,7 +46,6 @@ class RegistrationForm(forms.Form):
     password1 = CommonFields.get_password_field(True, attrs={"class": "form-control"})
     password2 = CommonFields.get_password_field(True, "Повторите пароль", attrs={"class": "form-control"})
     name = CommonFields.get_name_field(True, attrs={"class": "form-control"})
-    email = forms.CharField(label="E-mail", min_length=1, max_length=64, required=True, widget=forms.TextInput(attrs={"class": "form-control"}))
 
 
 class NewVotingForm(forms.Form):

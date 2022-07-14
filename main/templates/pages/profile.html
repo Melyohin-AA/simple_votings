@@ -44,24 +44,9 @@
                 <input type="text" class="form-control col-sm-9" value="{{ login }}" readonly>
             </div>
 
-            <div class="form-group row right_padding">
-                <label class="col-sm-3 col-form-label" for="Email">E-mail</label>
-                <input type="email" class="form-control col-sm-9" value="{{ email }}" readonly>
-            </div>
-
-            <div class="row pt-3">
-                <div class="col-sm-12">
-                    {% if activated %}
-                        <div class="text-center alert alert-success" role="alert">Аккаунт верифицирован</div>
-                    {% else %}
-                        <div class="text-center alert alert-warning" role="alert">Аккаунт не верифицирован</div>
-                    {% endif %}
-                </div>
-            </div>
-
             {% if self %}
             <div class="row left_padding right_padding">
-                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#changePassword">Сменить пароль</button>
+                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#changePassword">Изменить пароль</button>
             </div>
             {% endif %}
 

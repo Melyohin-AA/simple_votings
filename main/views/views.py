@@ -62,13 +62,13 @@ def registration_page(request):
     def post_handler(form, context) -> (bool, str, bool):
         password = form.data["password1"]
         login_ = form.data["login"]
-        ok, error = DB_UserTools.try_register_user(login_, password, form.data["name"], form.data["email"], request)
+        ok, error = DB_UserTools.try_register_user(login_, password, form.data["name"], request)
         return ok, error, ok
     return view_func_template(request, "registration/registration.html", main.forms.RegistrationForm, post_handler, context=context)
 
 
 def clear_all_data_page(request): #Developer's tool
-    if not simple_votings.settings.DEBUG or True:
+    if True:
         return redirect('/')
     DB_VotingTools.clear_vote_fact_list()
     DB_VotingTools.clear_vote_variant_list()
@@ -226,7 +226,6 @@ def profile_page(request, id):
                     ok, error, success = post_handler(form, context, user, user_data)
                 context['login'] = user.username
                 context['name'] = user.first_name
-                context['email'] = user.email
                 context['regdate'] = user.date_joined
                 context['createdpolls'] = user_data.created_votings_count
                 context['votedpolls'] = user_data.vote_count

@@ -8,17 +8,9 @@ def get_sentinel_user():
     return User.objects.get_or_create(username='deleted')[0]
 
 
-#class User:
-    # first_name - имя
-    # email - email
-    # username - логин
-    # password - хэш пароля
-    # date_joined - дата регистрации
-
-
 class UserData(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
-    activated = models.BooleanField(default=False)
+    activated = models.BooleanField(default=True)
     created_votings_count = models.IntegerField(default=0)
     vote_count = models.IntegerField(default=0)
     extra_info = models.TextField(default='')

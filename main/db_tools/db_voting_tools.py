@@ -19,7 +19,7 @@ class DB_VotingTools:
         if (type_ < 0) or (type_ > 2):
             Exceptions.throw(Exceptions.argument, "argument 'type_' must be integer from 0 to 2")
         if len(title) == 0:
-            return False, "Здесь нет уязвимости!"
+            return False, "Название должно быть указано!"
         ok, error = DB_UserTools.check_user_activation_required(author)
         if not ok:
             return False, error
@@ -79,7 +79,7 @@ class DB_VotingTools:
         if author != voting.author:
             return False, "Вы не являетесь автором указанного голосования!"
         if voting.started:
-            return False, "Нельзя изменять {} голосование!".format("законченное" if voting.completed else "начатое")
+            return False, "Нельзя изменять {} голосование!".format("завершённое" if voting.completed else "начатое")
         if voting.type == 2:
             return False, "Нельзя изменять варианты голоса дискретного голосования!"
         neighbour_variants = VoteVariant.objects.filter(voting=voting)
@@ -87,7 +87,7 @@ class DB_VotingTools:
             if neighbour_variant.description == description:
                 return False, "В этом голосование уже есть вариант голоса с указанным описанием!"
         if (len(description) == 0) or (len(description) > 4096):
-            return False, "Здесь нет уязвимости!"
+            return False, "Описание должно быть указано!"
         variant = VoteVariant(voting=voting, description=description)
         variant.save()
         return True, None
