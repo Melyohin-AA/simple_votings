@@ -1,4 +1,5 @@
 <div align="center">
+  <p align="right">2019.12 - 2020.02</p>
   <h2 align="center">Simple Votings</h2>
   <p align="center">Платформа для проведения онлайн-голосований</p>
 </div>
