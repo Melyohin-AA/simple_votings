@@ -2,7 +2,20 @@ import os
 import behave
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 
+
+# FUNCS
+
+def submit_user_credentials(context, username, password):
+    context.username = eval(username, {}, {})
+    context.password = eval(password, {}, {})
+    context.browser.find_element(By.ID, "id_username").send_keys(context.username)
+    context.browser.find_element(By.ID, "id_password").send_keys(context.password)
+    context.browser.find_element(By.XPATH, "//button[@type='submit']").click()
+
+
+# STEPS
 
 @behave.given('Chrome browser is launched (headless="{headless}")')
 def step_impl(context, headless):
@@ -13,6 +26,11 @@ def step_impl(context, headless):
     context.browser = webdriver.Chrome(driver_path, options=options)
 
 
+@behave.given('server address is "{index}"')
+def step_impl(context, index):
+    context.index = index
+
+
 @behave.then('I close browser')
 def step_impl(context):
     context.browser.close()
@@ -20,14 +38,10 @@ def step_impl(context):
 
 @behave.given('logged in as "{username}":"{password}"')
 def step_impl(context, username, password):
-    context.username = username = eval(username, {}, {})
-    context.password = password = eval(password, {}, {})
-    context.browser.get("http://www.old.practicalsqa.net/wp-login.php")
-    context.browser.find_element_by_id("user_login").send_keys(username)
-    context.browser.find_element_by_id("user_pass").send_keys(password)
-    context.browser.find_element_by_id("wp-submit").click()
+    context.browser.get(context.index + "login/")
+    submit_user_credentials(context, username, password)
 
 
-@behave.given('"{url}" page is opened')
-def step_impl(context, url):
-    context.browser.get(url)
+@behave.given('"{page}" page is opened')
+def step_impl(context, page):
+    context.browser.get(context.index + page)
