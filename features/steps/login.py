@@ -2,7 +2,7 @@ import behave
 from features.steps.common import submit_user_credentials, By
 
 
-@behave.when('I try log in as "{username}":"{password}"')
+@behave.when('I try log in as "{username:Text}":"{password:Text}"')
 def step_impl(context, username, password):
     submit_user_credentials(context, username, password)
 
@@ -15,7 +15,6 @@ def step_impl(context):
 @behave.then('I verify credentials are rejected')
 def step_impl(context):
     assert context.browser.current_url == context.index + "login/"
-    #assert context.browser.find_element(By.XPATH, "//div[contains(@class, 'alert-danger')]").is_displayed()
 
 
 @behave.when('I navigate to profile page')
