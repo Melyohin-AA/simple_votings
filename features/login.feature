@@ -1,8 +1,4 @@
-Feature: Authentication
-
-  Background: Common steps
-    Given Chrome browser is launched (headless=1)
-    And server address is "http://127.0.0.1:8000/"
+Feature: User authentication
 
   @login
   Scenario: User with valid credentials can log in
