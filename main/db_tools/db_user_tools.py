@@ -1,4 +1,3 @@
-import re
 import datetime
 
 from django.contrib.auth.models import User
@@ -8,8 +7,9 @@ from exceptions import Exceptions
 
 class DB_UserTools:
     @staticmethod
-    def try_register_user(login, password, name, request) -> (bool, str):
-        if not (isinstance(login, str) and isinstance(password, str) and isinstance(name, str)):
+    def try_register_user(login, password, name, test) -> (bool, str):
+        if not (isinstance(login, str) and isinstance(password, str) and
+                isinstance(name, str) and isinstance(test, bool)):
             Exceptions.throw(Exceptions.argument_type)
         if not ((0 < len(login) <= 64) and (0 < len(name) <= 64) and (0 < len(password) <= 64)):
             return False, "Не должно быть пустых полей!"
@@ -20,7 +20,7 @@ class DB_UserTools:
         user = User(first_name=name, username=login, date_joined=datetime.datetime.today())
         user.set_password(password)
         user.save()
-        user_data = UserData(user=user)
+        user_data = UserData(user=user, test=test)
         user_data.save()
         return True, None
 

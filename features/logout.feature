@@ -1,6 +1,7 @@
+@logout
 Feature: User logout
 
-  @logout
+  @en
   Scenario: Logged user logs out
     Given logged in as "user1":"pass1"
     When I try to log out

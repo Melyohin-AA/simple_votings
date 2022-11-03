@@ -14,6 +14,7 @@ class UserData(models.Model):
     created_votings_count = models.IntegerField(default=0)
     vote_count = models.IntegerField(default=0)
     extra_info = models.TextField(default='')
+    test = models.BooleanField(default=False)
 
 
 class Voting(models.Model):
@@ -33,7 +34,7 @@ class Voting(models.Model):
 class VoteVariant(models.Model):
     voting = models.ForeignKey(to=Voting, on_delete=models.CASCADE)
     description = models.TextField(default='')
-    vote_fact_count = models.IntegerField(default=0) #значение увеличивается во время голосования; поле для оптимизации подсчёта голосов
+    vote_fact_count = models.IntegerField(default=0)
 
 
 class VoteFact(models.Model):

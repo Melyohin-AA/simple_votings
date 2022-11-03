@@ -16,16 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from main.views import views
+from main.views import qa_api_view
 from django.contrib.auth import views as auth_views
 from main.views.views import get_menu_context
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('cad/', views.clear_all_data_page),
+    path('qa_api/', qa_api_view.QaApiView.as_view()),
     path('', views.index_page),
     path('login/', auth_views.LoginView.as_view(extra_context={'menu': get_menu_context(), 'pagename': 'Авторизация'})),
     path('logout/', auth_views.LogoutView.as_view()),
     path('registration/', views.registration_page),
-    path('cad/', views.clear_all_data_page), #страница, удаляющая всю информацию
     path('vm/my_votings/', views.my_votings_page),
     path('vm/new_voting/', views.new_voting_page),
     path('vote/<int:id>/', views.vote_page),

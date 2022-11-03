@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ cmd }}</title>
+</head>
+<body>
+  <form method="POST">
+    {% csrf_token %}
+    {% for arg in args %}
+      <span>{{arg}}</span> <input type="text" name="{{ arg }}"/> <br/>
+    {% endfor %}
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

@@ -48,6 +48,7 @@ def view_func_template(request, html_path, form_class, post_handler, get_handler
     return render(request, html_path, context)
 
 
+"""
 def __demo_of_view_func_template(request):
     def post_handler(form, context) -> (bool, str, bool):
         success = ok = False
@@ -55,16 +56,28 @@ def __demo_of_view_func_template(request):
         # post_handler code
         return ok, error, success
     return view_func_template(request, '~html path~', '~form class~', post_handler)
+"""
 
 
 def registration_page(request):
-    context = {"pagename": "Регистрация"}
-    def post_handler(form, context) -> (bool, str, bool):
-        password = form.data["password1"]
-        login_ = form.data["login"]
-        ok, error = DB_UserTools.try_register_user(login_, password, form.data["name"], request)
-        return ok, error, ok
-    return view_func_template(request, "registration/registration.html", main.forms.RegistrationForm, post_handler, context=context)
+    success = ok = False
+    error = None
+    if request.method == "POST":
+        form = main.forms.RegistrationForm(request.POST)
+        if form.is_valid():
+            password = form.data["password1"]
+            login_ = form.data["login"]
+            test = "test" in request.GET
+            ok, error = DB_UserTools.try_register_user(login_, password, form.data["name"], test)
+            success = ok
+        else:
+            error = "Неверный формат отосланных данных!"
+    else:
+        form = main.forms.RegistrationForm()
+        ok = True
+    context = {"pagename": "Регистрация", "menu": get_menu_context(),
+               "form": form, "ok": ok, "error": error, "success": success}
+    return render(request, "registration/registration.html", context)
 
 
 def clear_all_data_page(request): #Developer's tool
@@ -87,10 +100,12 @@ def new_voting_page(request):
         type_ = int(form.data["type"])
         show_votes_before_end = form.data.get("show_votes_before_end", 'off') == 'on'
         anonymous = form.data.get("anonymous", 'off') == 'on'
-        ok, error = DB_VotingTools.try_create_voting(author, title, description, type_, show_votes_before_end, anonymous)
+        ok, error = DB_VotingTools.try_create_voting(author, title, description, type_, show_votes_before_end,
+                                                     anonymous)
         success = ok
         return ok, error, success
-    result = view_func_template(request, "pages/voting_management/new_voting.html", main.forms.NewVotingForm, post_handler, context=context)
+    result = view_func_template(request, "pages/voting_management/new_voting.html", main.forms.NewVotingForm,
+                                post_handler, context=context)
     return redirect("/vm/my_votings/") if context["success"] else result
 
 
@@ -151,12 +166,15 @@ def voting_search_page(request):
         started_option = main.db_tools.db_search_tools.SearchFilterOption(started_option)
         context["completed_filter"] = completed_option = int(form.data["completed_option"])
         completed_option = main.db_tools.db_search_tools.SearchFilterOption(completed_option)
-        context["show_votes_before_end_filter"] = show_votes_before_end_option = int(form.data["show_votes_before_end_option"])
+        show_votes_before_end_option = int(form.data["show_votes_before_end_option"])
+        context["show_votes_before_end_filter"] = show_votes_before_end_option
         show_votes_before_end_option = main.db_tools.db_search_tools.SearchFilterOption(show_votes_before_end_option)
         context["anonymous_filter"] = anonymous_option = int(form.data["anonymous_option"])
         anonymous_option = main.db_tools.db_search_tools.SearchFilterOption(anonymous_option)
-        filter = main.db_tools.db_search_tools.VotingSearchFilter(started_option, completed_option, show_votes_before_end_option, anonymous_option)
-        votings, end = main.db_tools.db_search_tools.DB_SearchTools.search_for_voting(voting_title, author_login, filter, offset, page_size)
+        filter = main.db_tools.db_search_tools.VotingSearchFilter(started_option, completed_option,
+                                                                  show_votes_before_end_option, anonymous_option)
+        votings, end = main.db_tools.db_search_tools.DB_SearchTools.search_for_voting(voting_title, author_login,
+                                                                                      filter, offset, page_size)
         context["votings"] = votings
         context["prev_page"] = offset > 0
         context["next_page"] = not end
@@ -273,7 +291,8 @@ def profile_page(request, id):
         if ferr:
             error = "Неверный формат отосланных данных!"
         return success, error, success
-    result = view_func_template(request, "pages/profile.html", main.forms.ProfileForm, body, get_handler=body, context=context)
+    result = view_func_template(request, "pages/profile.html", main.forms.ProfileForm, body, get_handler=body,
+                                context=context)
     return redirect("/") if "del" in context else result
 
 
@@ -309,7 +328,7 @@ def manage_voting_page(request, id):
                     context["variants"] = variants
                 context["addv_lock"] = addv_lock
             else:
-                error = "У вас нет доступа к этому голосования!"
+                error = "У вас нет доступа к этому голосованию!"
         result = (ok, error, success, form) if get_method else (ok, error, success)
         return result
     def post_handler(form, context, voting, addv_lock) -> (bool, str, bool):
@@ -332,4 +351,5 @@ def manage_voting_page(request, id):
         if ferr:
             error = "Неверный формат отосланных данных!"
         return ok, error, addv_lock
-    return view_func_template(request, "pages/voting_management/manage_voting.html", main.forms.ManageVotingForm, body, get_handler=body)
+    return view_func_template(request, "pages/voting_management/manage_voting.html", main.forms.ManageVotingForm, body,
+                              get_handler=body)
