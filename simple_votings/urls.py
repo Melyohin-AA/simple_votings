@@ -16,14 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from main.views import views
-from main.views import qa_api_view
+from main.views import testing_api_view
 from django.contrib.auth import views as auth_views
 from main.views.views import get_menu_context
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('cad/', views.clear_all_data_page),
-    path('qa_api/', qa_api_view.QaApiView.as_view()),
+    path('testing_api/', testing_api_view.TestingApiView.as_view()),
     path('', views.index_page),
     path('login/', auth_views.LoginView.as_view(extra_context={'menu': get_menu_context(), 'pagename': 'Авторизация'})),
     path('logout/', auth_views.LogoutView.as_view()),

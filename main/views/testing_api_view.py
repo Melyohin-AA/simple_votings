@@ -4,14 +4,14 @@ from django.http import HttpRequest, HttpResponse
 from django.views import View
 
 
-class QaApiView(View):
+class TestingApiView(View):
     def get(self, request: HttpRequest):
         try:
             cmd = request.GET["cmd"]
             context = {"cmd": cmd, "args": self.__cmds[cmd].ARG_LIST}
         except KeyError:
             return HttpResponse(400)
-        return render(request, "pages/qa_api.html", context)
+        return render(request, "pages/testing_api.html", context)
 
     def post(self, request: HttpRequest):
         try:
