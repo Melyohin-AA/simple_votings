@@ -21,7 +21,7 @@ def run_cmd(cmd, args, browser):
         raise RuntimeError(f"Command {cmd}({args}) load has failed!")
     for key, value in args.items():
         browser.find_element(By.XPATH, f"html/body/form/input[@name='{key}']").send_keys(value)
-    browser.find_element(By.XPATH, f"html/body/form/button").click()
+    browser.find_element(By.XPATH, "html/body/form/button").click()
     status = int(browser.find_element(By.XPATH, "html/body").text)
     if status == 400:
         raise RuntimeError(f"Command {cmd}({args}) execution has failed!")
