@@ -4,6 +4,20 @@ from django.http import HttpRequest, HttpResponse
 from django.views import View
 
 
+""" RESPONSE CODES
++-----+-------------------+-------------------------+
+|     | GET               | POST                    |
++-----+-------------------+-------------------------+
+| 200 | command loaded    | command succeeded       |
+| 242 | -                 | positive answer         |
+| 243 | -                 | negative answer         |
+| 400 | command not found | command name/args error |
+| 406 | -                 | command not applicable  |
+| 501 | -                 | undefined command body  |
++-----+-------------------+-------------------------+
+"""
+
+
 class TestingApiView(View):
     def get(self, request: HttpRequest):
         try:
@@ -52,9 +66,22 @@ class TestingApiView(View):
 
         def execute(self) -> int:
             user, _ = DB_UserTools.try_find_user(self.login)
-            return 406 if user is None else 200
+            return 242 if user is not None else 243
+
+    class __TestingUser(__Command):
+        NAME = "testing_user"
+        ARG_LIST = ["login"]
+
+        def execute(self) -> int:
+            user, _ = DB_UserTools.try_find_user(self.login)
+            if user is not None:
+                user_data, _ = DB_UserTools.try_get_user_data(user)
+                if user_data is not None:
+                    return 242 if user_data.test else 243
+            return 406
 
     __cmds = {
         __DelUser.NAME: __DelUser,
         __HasUser.NAME: __HasUser,
+        __TestingUser.NAME: __TestingUser,
     }
