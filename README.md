@@ -1,5 +1,4 @@
 <div align="center">
-  <p align="right">2019.12.24 - 2020.02.02</p>
   <h2 align="center">Simple Votings</h2>
   <p align="center">Платформа для проведения онлайн-голосований</p>
 </div>
@@ -25,8 +24,8 @@
 * Целевые ОС - Linux, Windows 10
 
 ##### Технологический стек:
-* `Python 3.6`
-* `Django 3.0`
+* `Python 3.10`
+* `Django 3.1.4`
 * `SQLite 3.22`
 
 ### Использование
