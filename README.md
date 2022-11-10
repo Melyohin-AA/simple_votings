@@ -54,5 +54,5 @@ The project was developed by a small team of developers as part of an developers
 
 ### Demo
 
-Youtube video:
+Youtube video:<br>
 [![Demo](https://img.youtube.com/vi/uhkOR7ubrAA/0.jpg)](https://www.youtube.com/watch?v=uhkOR7ubrAA)
