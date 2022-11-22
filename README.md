@@ -10,7 +10,7 @@ The product is a website that provides users with the option to create votings a
 
 The project was developed by a small team of developers as part of an developers course.
 
-##### Features:
+#### Features:
 * User accounts
 * User's profile page
 * Option to create a new voting and set it up
@@ -22,14 +22,14 @@ The project was developed by a small team of developers as part of an developers
 * Different search filters
 * Target OS – Linux, Windows 10
 
-##### Technology stack:
+#### Technology stack:
 * `Python 3.10`
 * `Django 3.1.4`
 * `SQLite 3.22`
 
 ### Usage
 
-##### Project setting up
+#### Project setting up
 1. Clone the repository
     ```sh
     git clone https://github.com/Melyohin-AA/simple_votings.git
@@ -45,7 +45,7 @@ The project was developed by a small team of developers as part of an developers
     manage.py migrate
     ```
 
-##### Starting server
+#### Starting server
 1. Activate the virtual environment
 2. Run server
     ```sh
