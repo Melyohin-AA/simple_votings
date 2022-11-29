@@ -2,6 +2,8 @@ from main.db_tools.db_user_tools import DB_UserTools
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from django.views import View
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 
 """ RESPONSE CODES
@@ -18,6 +20,7 @@ from django.views import View
 """
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class TestingApiView(View):
     def get(self, request: HttpRequest):
         try:

@@ -6,7 +6,6 @@
 </head>
 <body>
   <form method="POST">
-    {% csrf_token %}
     {% for arg in args %}
       <span>{{arg}}</span> <input type="text" name="{{ arg }}"/> <br/>
     {% endfor %}
